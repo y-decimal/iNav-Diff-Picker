@@ -1,0 +1,569 @@
+diff all
+
+# version
+# INAV/SPEEDYBEEF405WING 9.0.1 Apr 28 2026 / 18:03:52 (ed3f5c1e) 
+# GCC-13.2.1 20231009
+
+# start the command batch
+batch start
+
+# reset configuration to default settings
+defaults noreboot
+
+# resources
+
+# Timer overrides
+
+# Outputs [servo]
+servo 1 1100 1900 1500 -100
+servo 2 1100 1900 1500 100
+servo 3 1000 2000 1000 100
+
+# safehome
+safehome 0 1 481234567 59876543
+safehome 1 1 471234567 58876543
+safehome 2 1 461234567 57876543
+safehome 3 1 451234567 56876543
+
+# Fixed Wing Approach
+fwapproach 0 6000 500 0 -55 0 0
+fwapproach 1 6000 500 0 -255 -345 0
+fwapproach 2 8000 500 0 -215 -35 0
+fwapproach 3 6000 500 1 -350 -170 0
+fwapproach 8 6000 500 0 0 0 0
+
+# geozone
+geozone 0 0 0 -100000 0 0 1 2
+
+
+# geozone vertices
+geozone vertex 0 0 481234567 59876543
+geozone vertex 0 1 200000 0
+
+
+# features
+feature BAT_PROF_AUTOSWITCH
+feature GEOZONE
+feature GPS
+feature LED_STRIP
+feature PWM_OUTPUT_ENABLE
+feature FW_LAUNCH
+feature FW_AUTOTRIM
+
+# beeper
+
+# blackbox
+blackbox -NAV_ACC
+blackbox NAV_POS
+blackbox NAV_PID
+blackbox MAG
+blackbox ACC
+blackbox ATTI
+blackbox RC_DATA
+blackbox RC_COMMAND
+blackbox MOTORS
+blackbox -GYRO_RAW
+blackbox -PEAKS_R
+blackbox -PEAKS_P
+blackbox -PEAKS_Y
+blackbox SERVOS
+
+# Receiver: Channel map
+
+# Ports
+serial 1 256 115200 115200 0 115200
+serial 3 262144 115200 115200 0 115200
+serial 4 33554432 115200 115200 0 115200
+
+# LEDs
+led 0 8,8::CT:3
+led 1 9,8::CT:3
+led 2 10,8::CT:3
+led 3 11,8::CT:3
+led 4 12,8::CT:3
+led 5 13,8::CT:3
+led 6 14,8::CT:3
+led 7 15,8::CW:0
+
+# LED color
+color 3 11,0,255
+color 10 233,0,255
+
+# LED mode_color
+
+# Modes [aux]
+aux 0 0 0 1800 2100
+aux 1 1 2 1925 1975
+aux 2 1 2 1825 1875
+aux 3 1 2 1725 1775
+aux 4 1 2 1625 1675
+aux 5 12 2 1550 1650
+aux 6 12 2 1450 1550
+aux 7 53 1 1825 1925
+aux 8 53 1 1425 1500
+aux 9 11 1 1700 1825
+aux 10 11 1 1300 1400
+aux 11 10 1 1325 1625
+aux 12 21 5 1150 1250
+aux 13 54 5 1450 1550
+aux 14 42 2 1875 1950
+aux 15 42 2 1825 1900
+aux 16 42 2 1475 1550
+aux 17 43 3 1025 2050
+aux 18 13 4 1750 2000
+
+# Adjustments [adjrange]
+adjrange 0 0 12 1025 1075 10 11
+adjrange 1 0 12 1075 1125 11 11
+adjrange 2 0 12 1125 1175 12 11
+adjrange 3 0 12 1175 1225 13 11
+adjrange 4 0 12 1225 1275 23 11
+adjrange 5 0 12 1275 1325 14 11
+adjrange 6 0 12 1325 1375 15 11
+adjrange 7 0 12 1375 1425 16 11
+adjrange 8 0 12 1425 1475 17 11
+adjrange 9 0 12 1475 1525 24 11
+adjrange 10 0 12 1525 1575 58 11
+adjrange 11 0 12 1575 1625 54 11
+adjrange 12 0 12 1625 1675 55 11
+
+# Receiver rxrange
+
+# temp_sensor
+
+# Mission Control Waypoints [wp]
+#wp 0 invalid
+
+# OSD [osd_layout]
+osd_layout 0 0 23 0 H
+osd_layout 0 1 12 0 H
+osd_layout 0 2 0 0 V
+osd_layout 0 3 8 6 V
+osd_layout 0 7 25 17 V
+osd_layout 0 8 15 14 H
+osd_layout 0 9 3 16 V
+osd_layout 0 11 3 3 V
+osd_layout 0 12 3 1 V
+osd_layout 0 13 9 11 H
+osd_layout 0 14 46 3 V
+osd_layout 0 15 47 10 V
+osd_layout 0 19 9 20 H
+osd_layout 0 22 26 4 V
+osd_layout 0 23 24 3 V
+osd_layout 0 25 9 6 H
+osd_layout 0 26 48 9 V
+osd_layout 0 28 2 20 H
+osd_layout 0 30 13 18 V
+osd_layout 0 32 47 1 V
+osd_layout 0 33 24 14 H
+osd_layout 0 34 22 1 V
+osd_layout 0 35 3 2 V
+osd_layout 0 38 52 1 H
+osd_layout 0 39 3 3 H
+osd_layout 0 40 3 2 H
+osd_layout 0 41 4 12 H
+osd_layout 0 42 4 13 H
+osd_layout 0 46 2 17 V
+osd_layout 0 48 12 3 H
+osd_layout 0 49 47 14 H
+osd_layout 0 54 39 3 H
+osd_layout 0 85 4 18 V
+osd_layout 0 97 45 15 V
+osd_layout 0 105 56 0 H
+osd_layout 0 107 47 14 V
+osd_layout 0 108 24 2 V
+osd_layout 0 110 47 2 V
+osd_layout 0 112 12 2 H
+osd_layout 0 124 1 8 V
+osd_layout 0 136 1 10 V
+osd_layout 0 137 1 9 V
+osd_layout 0 138 52 10 H
+osd_layout 0 143 12 14 H
+osd_layout 0 145 1 5 H
+osd_layout 0 150 21 15 V
+osd_layout 0 151 47 4 V
+osd_layout 0 153 3 9 H
+osd_layout 1 2 0 0 V
+osd_layout 1 3 8 6 V
+osd_layout 1 7 25 17 V
+osd_layout 1 8 15 14 H
+osd_layout 1 9 3 16 V
+osd_layout 1 11 3 1 V
+osd_layout 1 12 2 1 H
+osd_layout 1 13 9 11 H
+osd_layout 1 14 46 2 V
+osd_layout 1 15 47 10 V
+osd_layout 1 19 9 20 H
+osd_layout 1 22 26 2 V
+osd_layout 1 23 24 1 V
+osd_layout 1 25 57 9 H
+osd_layout 1 26 48 9 V
+osd_layout 1 28 2 20 H
+osd_layout 1 30 13 18 V
+osd_layout 1 32 47 1 V
+osd_layout 1 33 24 14 H
+osd_layout 1 34 23 1 H
+osd_layout 1 35 2 2 H
+osd_layout 1 38 52 1 H
+osd_layout 1 40 3 2 H
+osd_layout 1 41 4 12 H
+osd_layout 1 42 4 13 H
+osd_layout 1 46 1 17 H
+osd_layout 1 48 12 3 H
+osd_layout 1 49 46 14 H
+osd_layout 1 54 39 3 H
+osd_layout 1 85 4 17 V
+osd_layout 1 97 44 15 H
+osd_layout 1 105 56 0 H
+osd_layout 1 107 46 12 H
+osd_layout 1 108 28 2 H
+osd_layout 1 110 47 2 H
+osd_layout 1 112 12 2 H
+osd_layout 1 124 54 8 H
+osd_layout 1 137 46 13 H
+osd_layout 1 138 52 10 H
+osd_layout 1 150 21 15 V
+osd_layout 1 151 47 3 V
+osd_layout 2 1 13 0 H
+osd_layout 2 2 0 0 V
+osd_layout 2 3 8 6 V
+osd_layout 2 7 27 19 V
+osd_layout 2 8 10 14 H
+osd_layout 2 9 3 16 V
+osd_layout 2 11 53 2 V
+osd_layout 2 12 3 1 H
+osd_layout 2 13 4 12 V
+osd_layout 2 14 28 1 H
+osd_layout 2 15 52 11 H
+osd_layout 2 16 14 2 V
+osd_layout 2 17 14 1 V
+osd_layout 2 18 14 3 H
+osd_layout 2 19 9 20 H
+osd_layout 2 22 5 2 V
+osd_layout 2 23 3 1 V
+osd_layout 2 25 57 9 H
+osd_layout 2 28 12 14 H
+osd_layout 2 30 14 18 V
+osd_layout 2 32 47 1 V
+osd_layout 2 33 24 14 H
+osd_layout 2 35 3 3 H
+osd_layout 2 38 52 1 H
+osd_layout 2 40 3 2 H
+osd_layout 2 41 3 9 V
+osd_layout 2 42 3 10 V
+osd_layout 2 46 2 13 V
+osd_layout 2 56 14 5 H
+osd_layout 2 67 37 1 V
+osd_layout 2 68 37 2 V
+osd_layout 2 69 37 3 H
+osd_layout 2 85 53 17 V
+osd_layout 2 97 0 0 H
+osd_layout 2 105 56 0 H
+osd_layout 2 110 55 17 H
+osd_layout 2 112 12 2 H
+osd_layout 2 117 14 6 V
+osd_layout 2 135 14 4 V
+osd_layout 3 2 0 0 V
+osd_layout 3 3 8 6 V
+osd_layout 3 7 12 14 V
+osd_layout 3 9 0 0 H
+osd_layout 3 11 46 3 H
+osd_layout 3 12 12 1 H
+osd_layout 3 14 28 1 H
+osd_layout 3 15 25 9 V
+osd_layout 3 19 9 20 H
+osd_layout 3 22 2 1 V
+osd_layout 3 23 0 0 V
+osd_layout 3 25 48 9 H
+osd_layout 3 28 12 14 H
+osd_layout 3 30 1 15 V
+osd_layout 3 32 45 2 H
+osd_layout 3 33 25 14 V
+osd_layout 3 35 12 3 H
+osd_layout 3 38 45 1 H
+osd_layout 3 40 12 2 H
+osd_layout 3 41 12 11 H
+osd_layout 3 42 12 12 H
+osd_layout 3 46 24 0 V
+osd_layout 3 85 26 8 V
+osd_layout 3 105 56 0 H
+osd_layout 3 110 45 17 H
+osd_layout 3 112 12 2 H
+
+# Programming: logic
+logic 1 1 -1 6 1 9 0 0 0
+logic 3 1 -1 8 3 0 4 1 0
+logic 6 1 -1 51 1 11 0 1755 0
+logic 7 1 -1 47 4 6 0 0 0
+logic 8 1 7 19 0 0 0 50 0
+logic 10 1 -1 51 1 11 0 1244 0
+logic 11 1 -1 47 4 10 0 0 0
+logic 12 1 11 20 0 0 0 50 0
+logic 14 1 -1 3 5 0 0 1000 0
+logic 15 1 14 18 0 0 0 1000 0
+logic 16 1 -1 2 5 0 0 2000 0
+logic 17 1 16 18 0 0 0 2000 0
+logic 19 1 -1 51 1 9 0 1500 0
+logic 20 1 -1 12 4 19 0 0 0
+logic 21 1 20 18 0 0 0 1000 0
+logic 23 1 -1 38 0 17 5 0 0
+logic 25 1 -1 51 1 11 0 988 0
+logic 26 1 25 38 0 16 0 988 0
+logic 27 1 -1 51 1 11 0 2012 0
+logic 28 1 27 38 0 16 0 2012 0
+
+# Programming: global variables
+
+# Programming: PID controllers
+
+# OSD: custom elements
+
+# master
+set looptime = 1000
+set gyro_anti_aliasing_lpf_hz = 0
+set gyro_main_lpf_hz = 25
+set dynamic_gyro_notch_q = 250
+set dynamic_gyro_notch_min_hz = 30
+set setpoint_kalman_enabled = OFF
+set gyro_zero_x = -6
+set gyro_zero_y = -6
+set gyro_zero_z = 3
+set ins_gravity_cmss =  986.515
+set gyro_adaptive_filter_min_hz = 20
+set acc_hardware = ICM42605
+set acczero_x = -2
+set acczero_y = -5
+set acczero_z = 42
+set accgain_x = 4090
+set accgain_y = 4090
+set accgain_z = 4102
+set align_mag = CW180FLIP
+set mag_hardware = NONE
+set magzero_x = 83
+set magzero_y = -944
+set magzero_z = 264
+set maggain_x = 1439
+set maggain_y = 1437
+set maggain_z = 1503
+set baro_hardware = SPL06
+set pitot_hardware = VIRTUAL
+set blackbox_rate_denom = 4
+set motor_pwm_protocol = STANDARD
+set failsafe_delay = 3
+set failsafe_procedure = RTH
+set battery_capacity_unit = MWH
+set current_meter_scale = 190
+set current_meter_offset = 175
+set cruise_power = 22200
+set idle_power = 700
+set servo_pwm_rate = 330
+set small_angle = 180
+set applied_defaults = 4
+set rpm_gyro_filter_enabled = ON
+set rpm_gyro_min_hz = 90
+set gps_sbas_mode = AUTO
+set gps_ublox_use_glonass = ON
+set airmode_type = STICK_CENTER_ONCE
+set nav_wp_radius = 1000
+set nav_wp_max_safe_distance = 500
+set nav_overrides_motor_stop = AUTO_ONLY
+set nav_fw_soaring_motor_stop = ON
+set nav_rth_climb_first_stage_mode = EXTRA
+set nav_rth_climb_first_stage_altitude = 3000
+set nav_rth_allow_landing = FS_ONLY
+set nav_rth_altitude = 5000
+set nav_rth_home_altitude = 7500
+set nav_rth_linear_descent_start_distance = 1500
+set nav_rth_use_linear_descent = ON
+set safehome_usage_mode = RTH_FS
+set nav_fw_bank_angle = 45
+set nav_fw_climb_angle = 30
+set fw_min_throttle_down_pitch = 50
+set fw_loiter_direction = YAW
+set nav_fw_cruise_speed = 2083
+set nav_fw_control_smoothness = 2
+set nav_fw_launch_max_angle = 75
+set nav_fw_launch_motor_delay = 250
+set nav_fw_launch_spinup_time = 1000
+set nav_fw_launch_min_time = 250
+set nav_fw_launch_timeout = 6000
+set nav_fw_launch_max_altitude = 8000
+set nav_fw_launch_climb_angle = 22
+set nav_fw_allow_manual_thr_increase = ON
+set mavlink_version = 1
+set osd_video_system = DJI_NATIVE
+set osd_stats_energy_unit = WH
+set osd_time_alarm = 0
+set osd_alt_alarm = 0
+set osd_dist_alarm = 0
+set osd_neg_alt_alarm = 0
+set osd_crosshairs_style = TYPE8
+set osd_camera_uptilt = -5
+set osd_hud_radar_disp = 3
+set osd_hud_radar_range_min = 10
+set osd_hud_wp_disp = 3
+set osd_plus_code_digits = 10
+set osd_plus_code_short = 4
+set i2c_speed = 800KHZ
+set stats = ON
+set stats_total_time = 42907
+set stats_total_dist = 782245
+set stats_total_energy = 1155043
+set stats_flight_count = 2
+set tz_automatic_dst = EU
+set nav_fw_land_glide_pitch = 5
+set nav_fw_land_max_tailwind = 417
+
+# control_profile
+control_profile 1
+
+set fw_p_pitch = 20
+set fw_d_pitch = 9
+set fw_ff_pitch = 87
+set fw_p_roll = 20
+set fw_i_roll = 4
+set fw_d_roll = 10
+set fw_ff_roll = 72
+set fw_p_yaw = 20
+set fw_i_yaw = 0
+set fw_ff_yaw = 100
+set max_angle_inclination_rll = 550
+set dterm_lpf_hz = 10
+set fw_turn_assist_pitch_gain =  0.300
+set nav_fw_pos_z_p = 25
+set nav_fw_pos_z_i = 6
+set nav_fw_pos_z_d = 5
+set nav_fw_alt_control_response = 45
+set d_boost_min =  1.000
+set d_boost_max =  1.000
+set fw_level_pitch_trim =  1.990
+set thr_mid = 0
+set tpa_rate = 80
+set tpa_pitch_compensation = 12
+set rc_expo = 30
+set rc_yaw_expo = 30
+set pitch_rate = 11
+set yaw_rate = 4
+set manual_rc_expo = 45
+
+# control_profile
+control_profile 2
+
+set fw_p_pitch = 15
+set fw_i_pitch = 5
+set fw_d_pitch = 5
+set fw_ff_pitch = 70
+set fw_p_roll = 15
+set fw_i_roll = 3
+set fw_d_roll = 7
+set fw_p_yaw = 20
+set fw_i_yaw = 0
+set fw_ff_yaw = 100
+set max_angle_inclination_rll = 550
+set dterm_lpf_hz = 10
+set fw_turn_assist_pitch_gain =  0.300
+set nav_fw_pos_z_p = 25
+set nav_fw_pos_z_i = 6
+set nav_fw_pos_z_d = 5
+set d_boost_min =  1.000
+set d_boost_max =  1.000
+set tpa_rate = 80
+set rc_expo = 30
+set rc_yaw_expo = 30
+set roll_rate = 18
+set pitch_rate = 9
+set yaw_rate = 3
+
+# control_profile
+control_profile 3
+
+set fw_p_pitch = 15
+set fw_i_pitch = 5
+set fw_d_pitch = 5
+set fw_ff_pitch = 70
+set fw_p_roll = 15
+set fw_i_roll = 3
+set fw_d_roll = 7
+set fw_p_yaw = 20
+set fw_i_yaw = 0
+set fw_ff_yaw = 100
+set max_angle_inclination_rll = 550
+set dterm_lpf_hz = 10
+set fw_turn_assist_pitch_gain =  0.300
+set nav_fw_pos_z_p = 25
+set nav_fw_pos_z_i = 6
+set nav_fw_pos_z_d = 5
+set d_boost_min =  1.000
+set d_boost_max =  1.000
+set tpa_rate = 80
+set rc_expo = 30
+set rc_yaw_expo = 30
+set roll_rate = 18
+set pitch_rate = 9
+set yaw_rate = 3
+
+# mixer_profile
+mixer_profile 1
+
+set platform_type = AIRPLANE
+set model_preview_type = 8
+
+# Mixer: motor mixer
+
+mmix reset
+
+mmix 0  1.000  0.000  0.000  0.000
+
+# Mixer: servo mixer
+smix reset
+
+smix 0 1 0 55 0 -1
+smix 1 1 1 45 0 -1
+smix 2 2 0 -55 0 -1
+smix 3 2 1 45 0 -1
+smix 4 3 29 100 0 3
+
+# mixer_profile
+mixer_profile 2
+
+
+# Mixer: motor mixer
+
+# Mixer: servo mixer
+
+# battery_profile
+battery_profile 1
+
+set vbat_min_cell_voltage = 280
+set vbat_warning_cell_voltage = 330
+set battery_capacity = 64800
+set throttle_idle =  5.000
+set nav_fw_cruise_thr = 1300
+set nav_fw_pitch2thr = 8
+set nav_fw_launch_thr = 1900
+set nav_fw_launch_idle_thr = 1600
+
+# battery_profile
+battery_profile 2
+
+set battery_capacity = 29600
+set throttle_idle =  5.000
+set nav_fw_cruise_thr = 1300
+set nav_fw_pitch2thr = 8
+set nav_fw_launch_thr = 1800
+set nav_fw_launch_idle_thr = 1100
+
+# battery_profile
+battery_profile 3
+
+set throttle_idle =  5.000
+
+# restore original profile selection
+control_profile 1
+mixer_profile 1
+battery_profile 2
+
+# save configuration
+save
+
+# 
