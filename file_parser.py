@@ -13,7 +13,7 @@ class FileParser:
         for txt_file in txt_files:
             with open(txt_file, "r") as f:
                 content = f.read()
-                if "diff" in content:
+                if "diff all" in content.splitlines()[0]:
                     print(f"Found diff in {txt_file.name}")
                     self.diff_files.append(txt_file)
 
