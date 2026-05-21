@@ -1,0 +1,2 @@
+This is not a diff file, but it does contain the word diff
+This might confuse a poorly written file_parser, which mine happens to be right now
