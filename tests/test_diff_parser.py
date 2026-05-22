@@ -13,7 +13,7 @@ test_file_invalid = "tests/fixtures/not_a_diff.txt"
 def test_diff_parser_init():
     parser = DiffParser(test_file_valid)
     assert parser.file_path == test_file_valid
-
+    assert parser.diffs == []
 
 
 def test_parse_diffs_valid_file():
