@@ -50,4 +50,16 @@ def test_parse_diffs_invalid_file():
     parser.parse_diffs()
     diffs = parser.get_diffs()
     assert len(diffs) == 0
-    
+
+
+def test_filter_diffs():
+    parser = DiffParser(test_file_valid)
+    parser.debugLevel = 1
+    parser.parse_diffs()
+    header_keywords = ["# outputs [servo]", "# safehome"]
+    filtered_diffs = parser.filter_diffs(header_keywords)
+    assert (
+        len(filtered_diffs) == 2
+    ), f"Expected 2 diffs to match the header keywords, but found {len(filtered_diffs)}"
+    assert filtered_diffs[0][0].lower().strip() == header_keywords[0].lower().strip()
+    assert filtered_diffs[1][0].lower().strip() == header_keywords[1].lower().strip()
