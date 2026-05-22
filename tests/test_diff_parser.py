@@ -29,7 +29,7 @@ def test_parse_diffs_valid_file():
     found_servo_content = False
     for diff in diffs:
         assert diff[0].startswith("#")
-        if ("# Outputs [servo]" in diff[0].lower().strip()):
+        if ("# outputs [servo]" in diff[0].lower().strip()):
             found_servo_diff = True
         for line in diff[1:]:
             assert not line.startswith("#")
