@@ -5,7 +5,7 @@ class DiffParser:
 
     file_path = Path("")
     diffs = []
-    debug = False
+    debugLevel = 0
 
     def __init__(self, file_path):
         self.file_path = file_path
@@ -20,7 +20,7 @@ class DiffParser:
                 if line.startswith("#"):
                     if diff_block:
                         self.diffs.append(diff_block)
-                        if self.debug:
+                        if self.debugLevel > 1:
                             print(
                                 "Added diff block to diffs at index      #",
                                 len(self.diffs) - 1,
@@ -34,7 +34,7 @@ class DiffParser:
                             )
                     diff_block = []
                     diff_block.append(line)
-                    if self.debug:
+                    if self.debugLevel > 1:
                         print(
                             "Added header to current diff block      #",
                             len(self.diffs),
@@ -42,14 +42,14 @@ class DiffParser:
                             line,
                         )
                 elif line.strip() == "":
-                    if self.debug:
+                    if self.debugLevel > 2:
                         print(
                             "--------------------- Found empty line, skipping ---------------------"
                         )
                     continue
                 elif diff_block:
                     diff_block.append(line)
-                    if self.debug:
+                    if self.debugLevel > 3:
                         print(
                             "Added line to current diff block        #",
                             len(self.diffs),
