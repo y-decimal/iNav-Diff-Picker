@@ -8,9 +8,7 @@
         "**/__pycache__": true,
         "**/*.pyc": true,
         "**/.pytest_cache": true,
-        "**/node_modules": true,
         ".venv": true,
-        "*.egg-info": true,
-        ".DS_Store": true
+        ".coverage": true,
     }
 }

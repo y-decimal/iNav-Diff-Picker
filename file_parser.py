@@ -1,12 +1,10 @@
 from pathlib import Path
 
+
 class FileParser:
-    
-    diff_files = []
-    source_dir = Path("")
-    debug = False
-    
+
     def __init__(self, source_dir):
+        self.diff_files = []
         self.source_dir = Path(source_dir)
         self.debug = False
 
