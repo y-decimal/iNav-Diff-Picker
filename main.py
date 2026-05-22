@@ -1,7 +1,10 @@
 from file_parser import FileParser
 from diff_parser import DiffParser
+from diff_merger import DiffMerger
+from pathlib import Path
 
 source_directory = "source_diffs"
+output_directory = "output_diffs"
 
 filter_keywords = ["# geozone", "# safehome", "# Modes [aux]"]
 
@@ -25,12 +28,18 @@ def main():
         diff_parsers.append(diff_parser)
         print(f"Found {len(diffs)} diffs in {diff_file.name}.")
 
+    filtered_diffs = []
+
     for diff_parser in diff_parsers:
         print(f"Filtering diffs in file: {diff_parser.file_path.name}")
-        filtered_diffs = diff_parser.filter_diffs(filter_keywords)
+        filtered_diffs.extend(diff_parser.filter_diffs(filter_keywords))
         print(
             f"Found {len(filtered_diffs)} diffs matching filter keywords in {diff_parser.file_path.name}."
         )
+
+    diff_merger = DiffMerger(output_directory, filtered_diffs)
+    diff_merger.save_merged_diffs("merged_diffs.txt")
+    print(f"Merged diffs saved to {output_directory}/merged_diffs.txt")
 
 
 if __name__ == "__main__":
