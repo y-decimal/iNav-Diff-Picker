@@ -62,10 +62,16 @@ class DiffParser:
     def filter_diffs(self, header_keywords):
         filtered_diffs = []
         for diff in self.diffs:
-            if diff and diff[0].lower().strip() in header_keywords.lower().strip():
-                filtered_diffs.append(diff)
-                if self.debug:
-                    print("Added diff block to filtered diffs      #", len(filtered_diffs) - 1, " :", diff[0])
+            for header_keyword in header_keywords:
+                if diff and diff[0].lower().strip() == header_keyword.lower().strip():
+                    filtered_diffs.append(diff)
+                    if self.debugLevel > 0:
+                        print(
+                            "Added diff block to filtered diffs      #",
+                            len(filtered_diffs) - 1,
+                        " :",
+                        diff[0],
+                    )
         return filtered_diffs
 
     def get_diffs(self):
