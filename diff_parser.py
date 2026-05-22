@@ -3,14 +3,10 @@ from pathlib import Path
 
 class DiffParser:
 
-    file_path = Path("")
-    diffs = []
-    debugLevel = 0
-
     def __init__(self, file_path):
         self.file_path = file_path
         self.diffs = []
-        self.debug = False
+        self.debugLevel = 0
 
     def parse_diffs(self):
         with open(self.file_path, "r") as f:
@@ -69,9 +65,9 @@ class DiffParser:
                         print(
                             "Added diff block to filtered diffs      #",
                             len(filtered_diffs) - 1,
-                        " :",
-                        diff[0],
-                    )
+                            " :",
+                            diff[0],
+                        )
         return filtered_diffs
 
     def get_diffs(self):
