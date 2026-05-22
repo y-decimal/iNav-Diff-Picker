@@ -2,6 +2,7 @@ from pathlib import Path
 
 save_append = ["# save configuration", "save", "", "#"]
 
+
 class DiffMerger:
 
     diff_lists = []
@@ -13,7 +14,7 @@ class DiffMerger:
         self.diff_lists = diff_lists
 
     def merge_diffs(self):
-        self.merged_list = self.diff_lists
+        self.merged_list = self.diff_lists.copy()  # ← Create a copy, not a reference
         self.merged_list.append(save_append)
 
     def save_merged_diffs(self, output_file_name):
