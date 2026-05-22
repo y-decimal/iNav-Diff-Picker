@@ -18,6 +18,7 @@ def test_diff_parser_init():
 
 def test_parse_diffs_valid_file():
     parser = DiffParser(test_file_valid)
+    parser.debugLevel = 4  # Set debug level to see detailed output during parsing
     parser.parse_diffs()
     diffs = parser.get_diffs()
     assert len(diffs) > 0
