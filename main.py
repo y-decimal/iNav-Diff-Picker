@@ -6,8 +6,6 @@ from pathlib import Path
 source_directory = "source_diffs"
 output_directory = "output_diffs"
 
-filter_keywords = ["# geozone", "# safehome", "# Modes [aux]"]
-
 
 def main():
     file_parser = FileParser(source_directory)
@@ -28,19 +26,47 @@ def main():
         diff_parsers.append(diff_parser)
         print(f"Found {len(diffs)} diffs in {diff_file.name}.")
 
+    diffs = []
+
+    for diff_parser in diff_parsers:
+        diffs.extend(diff_parser.get_diffs())
+
+    diff_merger = DiffMerger(output_directory, diffs)
+    diff_merger.save_merged_diffs("merged_diffs.txt")
+    print(f"Merged diffs saved to {output_directory}/merged_diffs.txt")
+
+    filter_keywords = []
+
+    for diff_parser in diff_parsers:
+        header_keywords = diff_parser.get_header_keywords()
+        print(f"Header keywords in {diff_parser.file_path.name}: {header_keywords}")
+        filter_keywords.extend(header_keywords)
+
     filtered_diffs = []
 
     for diff_parser in diff_parsers:
         print(f"Filtering diffs in file: {diff_parser.file_path.name}")
+        for keyword in filter_keywords:
+            print(f"Filtering with keyword: {keyword}")
+        diff_parser.debugLevel = 1
         filtered_diffs.extend(diff_parser.filter_diffs(filter_keywords))
         print(
             f"Found {len(filtered_diffs)} diffs matching filter keywords in {diff_parser.file_path.name}."
         )
 
-    diff_merger = DiffMerger(output_directory, filtered_diffs)
-    diff_merger.save_merged_diffs("merged_diffs.txt")
-    print(f"Merged diffs saved to {output_directory}/merged_diffs.txt")
+    filtered_diff_merger = DiffMerger(output_directory, filtered_diffs)
+    filtered_diff_merger.save_merged_diffs("filtered_diffs.txt")
+    print(f"Merged diffs saved to {output_directory}/filtered_diffs.txt")
 
+    filtered_diff_by_category = []
+    
+    categories = ["navigation", "programming"]
+    for diff_parser in diff_parsers:
+        filtered_diff_by_category.extend(diff_parser.filter_diffs_by_category(categories))
+    
+    categorized_diff_merger = DiffMerger(output_directory, filtered_diff_by_category)
+    categorized_diff_merger.save_merged_diffs("categorized_diffs.txt")
+    print(f"Merged diffs saved to {output_directory}/categorized_diffs.txt")
 
 if __name__ == "__main__":
     main()
