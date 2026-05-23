@@ -58,6 +58,15 @@ def main():
     filtered_diff_merger.save_merged_diffs("filtered_diffs.txt")
     print(f"Merged diffs saved to {output_directory}/filtered_diffs.txt")
 
+    filtered_diff_by_category = []
+    
+    categories = ["navigation", "programming"]
+    for diff_parser in diff_parsers:
+        filtered_diff_by_category.extend(diff_parser.filter_diffs_by_category(categories))
+    
+    categorized_diff_merger = DiffMerger(output_directory, filtered_diff_by_category)
+    categorized_diff_merger.save_merged_diffs("categorized_diffs.txt")
+    print(f"Merged diffs saved to {output_directory}/categorized_diffs.txt")
 
 if __name__ == "__main__":
     main()
