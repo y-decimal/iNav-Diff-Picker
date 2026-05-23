@@ -67,9 +67,12 @@ def main_cli(filter_list, diff_parser, categories):
         for i, category in enumerate(categories):
             print(f"{i + 1}. {category}")
             idx += 1
-        print(f"{idx}. Show current selection")
-        print(f"{idx+1}. Merge selected diffs and exit")
-        print(f"{idx+2}. Exit without merging")
+        print(f"{idx}. Merge selected diffs and exit")
+        print(f"{idx+1}. Exit without merging")
+        print(
+            "Current selection:",
+            [diff[0] for diff in filter_list],
+        )
         try:
             selection = int(input("Enter a number: "))
             if selection == 0:
@@ -89,19 +92,9 @@ def main_cli(filter_list, diff_parser, categories):
                 )
                 continue
             elif selection == idx:
-                print(
-                    "Current selection:",
-                    [
-                        diff[0]
-                        for filtered_diff in filter_list
-                        for diff in filtered_diff
-                    ],
-                )
-                continue
-            elif selection == idx + 1:
                 # Merge selected diffs and exit
                 break
-            elif selection == idx + 2:
+            elif selection == idx + 1:
                 # Exit without merging
                 exit()
 
