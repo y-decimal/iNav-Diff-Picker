@@ -127,6 +127,15 @@ class DiffParser:
                         )
         return filtered_diffs
 
+    def get_categories(self):
+        categories = []
+        for diff in self.diffs:
+            if diff and diff[0].startswith("#"):
+                category = self.get_category_for_header(diff[0])
+                if category not in categories:
+                    categories.append(category)
+        return categories
+
     def get_category_for_header(self, header):
         header_lower = header.lower().strip()
         for category, headers in self.header_mapping['categories'].items():
