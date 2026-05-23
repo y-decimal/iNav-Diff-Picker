@@ -1,0 +1,49 @@
+{
+  "categories": {
+    "navigation": [
+      "# safehome",
+      "# fixed wing approach",
+      "# geozone",
+      "# geozone vertices",
+      "# mission control waypoints [wp]"
+    ],
+    "hardware": [
+      "# outputs [servo]",
+      "# ports",
+      "# leds",
+      "# led color",
+      "# led mode_color",
+      "# resources",
+      "# timer overrides",
+      "# master",
+      "# temp_sensor"
+    ],
+    "receiver": [
+      "# receiver: channel map",
+      "# receiver rxrange"
+    ],
+    "features": [
+      "# features",
+      "# beeper",
+      "# blackbox"
+    ],
+    "osd": [
+      "# osd [osd_layout]",
+      "# osd: custom elements"
+    ],
+    "programming": [
+      "# programming: logic",
+      "# programming: global variables",
+      "# programming: pid controllers"
+    ],
+    "profiles": [
+      "# control_profile",
+      "# mixer_profile",
+      "# battery_profile"
+    ],
+    "settings": [
+      "# modes [aux]",
+      "# adjustments [adjrange]"
+    ]
+  }
+}

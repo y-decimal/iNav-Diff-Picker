@@ -1,3 +1,4 @@
+import json
 from pathlib import Path
 
 
@@ -10,6 +11,8 @@ class DiffParser:
         self.file_path = file_path
         self.diffs = []
         self.debugLevel = 0
+        with open('header_categories.json', 'r') as f:
+            self.header_mapping = json.load(f)
 
     def parse_diffs(self):
         with open(self.file_path, "r") as f:
@@ -124,7 +127,36 @@ class DiffParser:
                         )
         return filtered_diffs
 
+    def get_category_for_header(self, header):
+        header_lower = header.lower().strip()
+        for category, headers in self.header_mapping['categories'].items():
+            if any(h.lower() == header_lower for h in headers):
+                return category
+        return "uncategorized"
+
+    def filter_diffs_by_category(self, category_keywords):
+        filtered_diffs = []
+        for diff in self.diffs:
+            if diff and diff[0].startswith("#"):
+                category = self.get_category_for_header(diff[0])
+                if category in category_keywords and len(diff) > 1:
+                    filtered_diffs.append(diff)
+                    if self.debugLevel > 0:
+                        print(
+                            "Added diff block to filtered diffs by category      #",
+                            len(filtered_diffs) - 1,
+                            " :",
+                            diff[0],
+                            " (category: ",
+                            category,
+                            ")",
+                        )
+        return filtered_diffs
+
+        
 
 
     def get_diffs(self):
         return self.diffs
+
+       
