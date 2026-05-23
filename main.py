@@ -28,6 +28,22 @@ def main():
         diff_parsers.append(diff_parser)
         print(f"Found {len(diffs)} diffs in {diff_file.name}.")
 
+    diffs = []
+
+    for diff_parser in diff_parsers:
+        diffs.extend(diff_parser.get_diffs())
+
+    diff_merger = DiffMerger(output_directory, diffs)
+    diff_merger.save_merged_diffs("merged_diffs.txt")
+    print(f"Merged diffs saved to {output_directory}/merged_diffs.txt")
+
+    filter_keywords = []
+
+    for diff_parser in diff_parsers:
+        header_keywords = diff_parser.get_header_keywords()
+        print(f"Header keywords in {diff_parser.file_path.name}: {header_keywords}")
+        filter_keywords.extend(header_keywords)
+
     filtered_diffs = []
 
     for diff_parser in diff_parsers:
