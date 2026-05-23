@@ -102,11 +102,12 @@ class DiffParser:
             # the diff file ends with an empty header line, so we do not need to add the last diff block
 
     def get_header_keywords(self):
-        return [
-            diff[0]
-            for diff in self.diffs
-            if diff and diff[0].startswith("#") and len(diff) > 1
-        ]
+        header_keywords = []
+        for diff in self.diffs:
+            if diff and diff[0].startswith("#") and diff[0] not in header_keywords:
+                header_keywords.append(diff[0])
+
+        return header_keywords
 
     def filter_diffs(self, header_keywords):
         filtered_diffs = []
