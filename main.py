@@ -55,7 +55,7 @@ def main():
     diff_merger = DiffMerger(output_directory, filter_list)
     
     print("Choose file name for merged diffs (without extension): ")
-    file_name = input("Enter file name: ")
+    file_name = input("Enter file name: ") + ".txt"
     diff_merger.save_merged_diffs(file_name)
     
 
