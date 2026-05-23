@@ -19,6 +19,8 @@ def valid_diff_file(temp_dir):
     content = """# version
 firmware_version=9.0.1
 
+# resources
+
 # outputs [servo]
 servo 0 1000 2000 1500 50
 servo 1 1100 1900 1500 100
@@ -64,14 +66,15 @@ No diffs either
 @pytest.fixture
 def file_with_empty_categories(temp_dir):
     """Create a file with empty category blocks"""
-    content = """# category1
+    content = """# resources
+
+# category1
 
 # category2
 
 # category3
 value1
 value2
-
 """
     file_path = temp_dir / "empty_categories.txt"
     file_path.write_text(content)
@@ -87,6 +90,41 @@ def sample_diff_blocks():
         ["# battery", "battery_meter_alert=20"],
         ["# board", "board_name=MATEKF411"],
     ]
+
+
+@pytest.fixture
+def file_with_invalid_headers(temp_dir):
+    """Create a file with some invalid headers that should be skipped"""
+    content = """diff all
+
+# version
+# INAV/SPEEDYBEEF405WING 9.0.1 Apr 28 2026 / 18:03:52 (ed3f5c1e) 
+# GCC-13.2.1 20231009
+
+# start the command batch
+batch start
+
+# reset configuration to default settings
+defaults noreboot
+
+# resources
+
+# Outputs [servo]
+servo 1 1100 1900 1500 -100
+servo 2 1100 1900 1500 100
+servo 3 1000 2000 1000 100
+    
+# restore original profile selection
+
+# save configuration
+save
+
+#
+ 
+"""
+    file_path = temp_dir / "invalid_headers.txt"
+    file_path.write_text(content)
+    return file_path
 
 
 # ===== INITIALIZATION TESTS =====
@@ -120,7 +158,7 @@ def test_parse_diffs_creates_blocks(valid_diff_file):
     parser.parse_diffs()
     diffs = parser.get_diffs()
 
-    # Should have 5 blocks: version, servo, safehome, battery, board
+    # Should have 5 blocks: resources, servo, safehome, battery, board
     assert len(diffs) == 5, f"Expected 5 diff blocks, got {len(diffs)}"
 
 
@@ -131,7 +169,7 @@ def test_parse_diffs_block_headers(valid_diff_file):
     diffs = parser.get_diffs()
 
     expected_headers = [
-        "# version",
+        "# resources",
         "# outputs [servo]",
         "# safehome",
         "# battery",
@@ -200,6 +238,27 @@ def test_parse_diffs_multiple_calls(valid_diff_file):
 
     # Should have double the diffs
     assert second_count == first_count * 2, "Multiple parse calls should append diffs"
+    
+def test_parse_diffs_invalid_headers(file_with_invalid_headers):
+    """Test that invalid headers are skipped and do not create diff blocks"""
+    parser = DiffParser(str(file_with_invalid_headers))
+    parser.parse_diffs()
+    diffs = parser.get_diffs()
+
+    expected_valid_headers = [
+        "# resources",
+        "# outputs [servo]",
+    ]
+
+    # Should only have 2 valid blocks: resources and servo
+    assert len(diffs) == 2, f"Expected 2 valid diff blocks, got {len(diffs)}. Diffs: {diffs}"
+    
+    for i in range(len(diffs)):
+        assert diffs[i][0].lower().strip() == expected_valid_headers[i].lower().strip(), f"Unexpected header '{diffs[i][0]}' found"
+    
+    for diff in diffs:
+        assert diff[0].lower().strip() not in [h.lower() for h in DiffParser.invalid_headers], f"Invalid header '{diff[0]}' should be skipped"
+
 
 
 # ===== GET_DIFFS TESTS =====
