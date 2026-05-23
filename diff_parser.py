@@ -113,7 +113,7 @@ class DiffParser:
         filtered_diffs = []
         for diff in self.diffs:
             for header_keyword in header_keywords:
-                if diff and diff[0].lower().strip() == header_keyword.lower().strip():
+                if diff and diff[0].lower().strip() == header_keyword.lower().strip() and len(diff) > 1:
                     filtered_diffs.append(diff)
                     if self.debugLevel > 0:
                         print(
@@ -123,6 +123,8 @@ class DiffParser:
                             diff[0],
                         )
         return filtered_diffs
+
+
 
     def get_diffs(self):
         return self.diffs
