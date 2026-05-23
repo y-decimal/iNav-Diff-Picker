@@ -49,15 +49,15 @@ def main():
     print(f"Found {len(diffs)} diffs in {selected_file.name}.")
 
     filter_list = []
-    
+
     main_cli(filter_list, diff_parser, categories)
-    
+
     diff_merger = DiffMerger(output_directory, filter_list)
-    
+
     print("Choose file name for merged diffs (without extension): ")
     file_name = input("Enter file name: ") + ".txt"
     diff_merger.save_merged_diffs(file_name)
-    
+
 
 def main_cli(filter_list, diff_parser, categories):
     print("Choose category:")
@@ -89,7 +89,14 @@ def main_cli(filter_list, diff_parser, categories):
                 )
                 continue
             elif selection == idx:
-                print("Current selection:", [diff[0] for filtered_diff in filter_list for diff in filtered_diff])
+                print(
+                    "Current selection:",
+                    [
+                        diff[0]
+                        for filtered_diff in filter_list
+                        for diff in filtered_diff
+                    ],
+                )
                 continue
             elif selection == idx + 1:
                 # Merge selected diffs and exit
@@ -101,6 +108,7 @@ def main_cli(filter_list, diff_parser, categories):
         except ValueError:
             print("Invalid input. Please enter a number.")
             continue
+
 
 def diff_selection(diff_parser, filtered_diffs):
     selected_diff = []
@@ -126,7 +134,7 @@ def diff_selection(diff_parser, filtered_diffs):
                 print(f"Please enter a number between 1 and {len(filtered_diffs)}.")
         except ValueError:
             print("Invalid input. Please enter a number.")
-    
+
     return selected_diff
 
 
