@@ -1,7 +1,11 @@
 from pathlib import Path
 
 
+
 class DiffParser:
+    
+    first_valid_header = "# resources"
+    invalid_headers = ["# restore original profile selection", "# save configuration"]
 
     def __init__(self, file_path):
         self.file_path = file_path
@@ -12,7 +16,31 @@ class DiffParser:
         with open(self.file_path, "r") as f:
             content = f.read()
             diff_block = []
+            valid = False
             for line in content.splitlines():
+                if not valid and line.startswith("#") and line.lower().strip() != DiffParser.first_valid_header:
+                    if self.debugLevel > 0:
+                        print(
+                            "--------------------- Found header before first valid header, skipping diff block ---------------------"
+                        )
+                    diff_block = []
+                    continue
+                elif not valid and line.startswith("#") and line.lower().strip() == DiffParser.first_valid_header:
+                    valid = True
+                    if self.debugLevel > 0:
+                        print(
+                            "Found first valid header, starting to parse diffs      #",
+                            len(self.diffs),
+                            " :",
+                            line,
+                        )
+                if line.startswith("#") and line.lower().strip() in [h.lower() for h in DiffParser.invalid_headers]:
+                    if self.debugLevel > 0:
+                        print(
+                            "--------------------- Found invalid header, skipping diff block ---------------------"
+                        )
+                    diff_block = []
+                    continue
                 if line.startswith("#"):
                     if diff_block:
                         self.diffs.append(diff_block)
