@@ -142,6 +142,10 @@ class DiffParser:
             if any(h.lower() == header_lower for h in headers):
                 return category
         return "uncategorized"
+    
+    def get_all_headers_with_category(self, category):
+        headers = self.header_mapping['categories'].get(category, [])
+        return headers
 
     def filter_diffs_by_category(self, category_keywords):
         filtered_diffs = []
