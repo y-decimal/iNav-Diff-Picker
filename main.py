@@ -73,7 +73,7 @@ def main_cli(filter_list, diff_parser, categories):
         try:
             selection = int(input("Enter a number: "))
             if selection == 0:
-                filter_list.append(
+                filter_list.extend(
                     diff_selection(
                         diff_parser,
                         diff_parser.get_diffs(),
@@ -81,7 +81,7 @@ def main_cli(filter_list, diff_parser, categories):
                 )
                 continue
             if selection <= len(categories) and selection > 0:
-                filter_list.append(
+                filter_list.extend(
                     diff_selection(
                         diff_parser,
                         diff_parser.filter_diffs_by_category(categories[selection - 1]),
