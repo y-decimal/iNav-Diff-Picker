@@ -1,9 +1,8 @@
 from pathlib import Path
 
 
-
 class DiffParser:
-    
+
     first_valid_header = "# resources"
     invalid_headers = ["# restore original profile selection", "# save configuration"]
 
@@ -18,14 +17,22 @@ class DiffParser:
             diff_block = []
             valid = False
             for line in content.splitlines():
-                if not valid and line.startswith("#") and line.lower().strip() != DiffParser.first_valid_header:
+                if (
+                    not valid
+                    and line.startswith("#")
+                    and line.lower().strip() != DiffParser.first_valid_header
+                ):
                     if self.debugLevel > 0:
                         print(
                             "--------------------- Found header before first valid header, skipping diff block ---------------------"
                         )
                     diff_block = []
                     continue
-                elif not valid and line.startswith("#") and line.lower().strip() == DiffParser.first_valid_header:
+                elif (
+                    not valid
+                    and line.startswith("#")
+                    and line.lower().strip() == DiffParser.first_valid_header
+                ):
                     valid = True
                     if self.debugLevel > 0:
                         print(
@@ -34,11 +41,22 @@ class DiffParser:
                             " :",
                             line,
                         )
-                if line.startswith("#") and line.lower().strip() in [h.lower() for h in DiffParser.invalid_headers]:
+                if line.startswith("#") and line.lower().strip() in [
+                    h.lower() for h in DiffParser.invalid_headers
+                ]:
                     if self.debugLevel > 0:
                         print(
                             "--------------------- Found invalid header, skipping diff block ---------------------"
                         )
+                    if diff_block:
+                        self.diffs.append(diff_block)
+                        if self.debugLevel > 1:
+                            print(
+                                "Added diff block to diffs at index      #",
+                                len(self.diffs) - 1,
+                                " :",
+                                diff_block[0],
+                            )
                     diff_block = []
                     continue
                 if line.startswith("#"):
@@ -84,7 +102,11 @@ class DiffParser:
             # the diff file ends with an empty header line, so we do not need to add the last diff block
 
     def get_header_keywords(self):
-        return [diff[0] for diff in self.diffs if diff and diff[0].startswith("#")]
+        return [
+            diff[0]
+            for diff in self.diffs
+            if diff and diff[0].startswith("#") and len(diff) > 1
+        ]
 
     def filter_diffs(self, header_keywords):
         filtered_diffs = []
