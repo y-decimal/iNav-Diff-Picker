@@ -9,25 +9,49 @@ class FileReader(ctk.CTkFrame):
         super().__init__(parent)
         self.parent = parent
         self.categories = []
-        self.category_views = {}
+        
+        self.subblocks = []
     
     def create_widgets(self):
         self.categories = self.parent.parent.controller.get_list_of_categories()
         self.category_selector = ctk.CTkSegmentedButton(self, values=self.categories, command=self.on_category_selected)
         self.category_selector.pack(padx=10, pady=10, fill="x")
         
-    def on_category_selected(self, selected_category):
-        if selected_category in self.category_views:
-            self.category_views[selected_category].tkraise()
-        else:
-            content = self.parent.controller.get_category_content(selected_category)
-            subblock = FileSubBlock(self)
-            subblock.set_category(selected_category)
-            
-            label = ctk.CTkLabel(subblock.content_frame, text=content[0] if content else "", anchor="center", justify="center", wraplength=400)
-            subblock.add_content(label)
-            
-            self.category_views[selected_category] = subblock
-            subblock.pack(padx=10, pady=10, fill="both", expand=True)
+        self.frame = ctk.CTkFrame(self)
+        self.frame.pack(padx=10, pady=10, fill="both", expand=True)
         
+    def on_category_selected(self, selected_category):
+        print("Category selected: ", str(selected_category))
+        headers = self.parent.parent.controller.get_headers_by_category(selected_category)
+        self.display_headers(headers)
+        
+        
+    def display_headers(self, headers):
+        # Clear existing subblocks if any
+        for subblock in self.subblocks:
+            subblock.destroy()
+        self.subblocks = []
+        
+        for header in headers:
+            if isinstance(header, list):
+                header = header[0] if header else ""
+            if not header:
+                continue
+            content = self.parent.parent.controller.get_content_by_header(header)
+            if not content or content == "":
+                continue
+            
+            subblock = FileSubBlock(self.frame)
+            subblock.set_header(header)
+
+            subblock.add_content(content)
+            
+            self.subblocks.append(subblock)
+            
+        cols = (len(self.subblocks) * (16 / 9)) / 2
+        rows = math.ceil(len(self.subblocks) / cols)
+        
+        for subblock in self.subblocks:
+            subblock.grid(column=self.subblocks.index(subblock) // rows, row=self.subblocks.index(subblock) % rows, padx=10, pady=10, sticky="nsew")
+            
     
