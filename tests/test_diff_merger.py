@@ -1,7 +1,7 @@
 import pytest
 from pathlib import Path
 import tempfile
-from diff_merger import DiffMerger
+from source.model.diff_merger import DiffMerger
 
 
 @pytest.fixture

@@ -1,7 +1,7 @@
 import pytest
 from pathlib import Path
 import tempfile
-from diff_parser import DiffParser
+from source.model.diff_parser import DiffParser
 
 # ===== FIXTURES =====
 
@@ -15,7 +15,7 @@ def temp_dir():
 
 @pytest.fixture
 def valid_diff_file(temp_dir):
-    """Create a valid diff file with multiple categories"""
+    """Create a valid diff file with multiple headers"""
     content = """# version
 firmware_version=9.0.1
 
@@ -53,7 +53,7 @@ def empty_file(temp_dir):
 
 @pytest.fixture
 def file_without_headers(temp_dir):
-    """Create a file without any category headers"""
+    """Create a file without any headers"""
     content = """Just some regular content
 No headers here
 No diffs either
@@ -64,19 +64,19 @@ No diffs either
 
 
 @pytest.fixture
-def file_with_empty_categories(temp_dir):
-    """Create a file with empty category blocks"""
+def file_with_empty_headers(temp_dir):
+    """Create a file with empty header blocks"""
     content = """# resources
 
-# category1
+# header1
 
-# category2
+# header2
 
-# category3
+# header3
 value1
 value2
 """
-    file_path = temp_dir / "empty_categories.txt"
+    file_path = temp_dir / "empty_headers.txt"
     file_path.write_text(content)
     return file_path
 
@@ -214,9 +214,9 @@ def test_parse_diffs_no_headers(file_without_headers):
     assert len(diffs) == 0, "File without headers should result in no diffs"
 
 
-def test_parse_diffs_empty_categories(file_with_empty_categories):
-    """Test parsing file with empty category blocks"""
-    parser = DiffParser(str(file_with_empty_categories))
+def test_parse_diffs_empty_headers(file_with_empty_headers):
+    """Test parsing file with empty header blocks"""
+    parser = DiffParser(str(file_with_empty_headers))
     parser.parse_diffs()
     diffs = parser.get_diffs()
 
@@ -289,7 +289,7 @@ def test_filter_diffs_basic(valid_diff_file):
     """Test filtering diffs by keyword"""
     parser = DiffParser(str(valid_diff_file))
     parser.parse_diffs()
-    filtered = parser.filter_diffs(["# outputs [servo]"])
+    filtered = parser.filter_diffs_by_header(["# outputs [servo]"])
 
     assert len(filtered) == 1, "Should find 1 matching diff"
     assert filtered[0][0] == "# outputs [servo]"
@@ -299,7 +299,7 @@ def test_filter_diffs_multiple_keywords(valid_diff_file):
     """Test filtering with multiple keywords"""
     parser = DiffParser(str(valid_diff_file))
     parser.parse_diffs()
-    filtered = parser.filter_diffs(["# outputs [servo]", "# safehome", "# battery"])
+    filtered = parser.filter_diffs_by_header(["# outputs [servo]", "# safehome", "# battery"])
 
     assert len(filtered) == 3, f"Should find 3 matching diffs, got {len(filtered)}"
 
@@ -308,7 +308,7 @@ def test_filter_diffs_case_insensitive(valid_diff_file):
     """Test that filtering is case-insensitive"""
     parser = DiffParser(str(valid_diff_file))
     parser.parse_diffs()
-    filtered = parser.filter_diffs(["# OUTPUTS [SERVO]"])
+    filtered = parser.filter_diffs_by_header(["# OUTPUTS [SERVO]"])
 
     assert len(filtered) == 1, "Filter should be case-insensitive"
     assert filtered[0][0] == "# outputs [servo]"
@@ -318,7 +318,7 @@ def test_filter_diffs_whitespace_tolerant(valid_diff_file):
     """Test that filtering tolerates extra whitespace"""
     parser = DiffParser(str(valid_diff_file))
     parser.parse_diffs()
-    filtered = parser.filter_diffs(["  # outputs [servo]  "])
+    filtered = parser.filter_diffs_by_header(["  # outputs [servo]  "])
 
     assert len(filtered) == 1, "Filter should strip whitespace"
 
@@ -330,7 +330,7 @@ def test_filter_diffs_no_matches():
         ["# outputs [servo]", "servo 0 1000 2000"],
         ["# battery", "battery_alert=20"],
     ]
-    filtered = parser.filter_diffs(["# nonexistent", "# nothere"])
+    filtered = parser.filter_diffs_by_header(["# nonexistent", "# nothere"])
 
     assert len(filtered) == 0, "Should find no matching diffs"
 
@@ -342,7 +342,7 @@ def test_filter_diffs_partial_match_not_found():
         ["# outputs [servo]", "servo 0 1000 2000"],
     ]
     # Partial match should not work
-    filtered = parser.filter_diffs(["# outputs"])
+    filtered = parser.filter_diffs_by_header(["# outputs"])
 
     assert len(filtered) == 0, "Partial matches should not be found"
 
@@ -350,7 +350,7 @@ def test_filter_diffs_partial_match_not_found():
 def test_filter_diffs_empty_diffs():
     """Test filtering when no diffs have been parsed"""
     parser = DiffParser("dummy_path")
-    filtered = parser.filter_diffs(["# outputs [servo]"])
+    filtered = parser.filter_diffs_by_header(["# outputs [servo]"])
 
     assert len(filtered) == 0, "Filtering empty diffs should return empty list"
 
@@ -359,7 +359,7 @@ def test_filter_diffs_returns_list_of_blocks(valid_diff_file):
     """Test that filter_diffs returns complete diff blocks"""
     parser = DiffParser(str(valid_diff_file))
     parser.parse_diffs()
-    filtered = parser.filter_diffs(["# safehome"])
+    filtered = parser.filter_diffs_by_header(["# safehome"])
 
     assert len(filtered) == 1
     assert filtered[0][0] == "# safehome"
@@ -399,6 +399,6 @@ def test_filter_diffs_empty_keyword_list():
     """Test filtering with empty keyword list"""
     parser = DiffParser("dummy_path")
     parser.diffs = [["# outputs [servo]", "servo 0 1000 2000"]]
-    filtered = parser.filter_diffs([])
+    filtered = parser.filter_diffs_by_header([])
 
     assert len(filtered) == 0, "Empty keyword list should return no results"

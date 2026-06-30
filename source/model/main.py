@@ -1,6 +1,6 @@
-from file_parser import FileParser
-from diff_parser import DiffParser
-from diff_merger import DiffMerger
+from source.model.file_parser import FileParser
+from source.model.diff_parser import DiffParser
+from source.model.diff_merger import DiffMerger
 from pathlib import Path
 
 source_directory = "source_diffs"
@@ -8,7 +8,8 @@ output_directory = "output_diffs"
 
 
 def main():
-    file_parser = FileParser(source_directory)
+    file_parser = FileParser()
+    file_parser.set_source_dir(source_directory)
     file_parser.parse_files()
     diff_files = file_parser.get_diff_files()
 
