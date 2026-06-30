@@ -5,7 +5,7 @@
             "name": "Python: Launch iNav Diff Picker GUI",
             "type": "python",
             "request": "launch",
-            "module": "source.gui",
+            "module": "source",
             "cwd": "${workspaceFolder}",
             "console": "integratedTerminal",
             "justMyCode": true
