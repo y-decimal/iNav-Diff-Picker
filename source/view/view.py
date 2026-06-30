@@ -9,6 +9,7 @@ class View(ttk.Frame):
         apply_theme(self)
         
         self.create_widgets()
+        self.pack(fill=tk.BOTH, expand=True)
 
     def create_widgets(self):
         # Create a label
