@@ -8,7 +8,8 @@ output_directory = "output_diffs"
 
 
 def main():
-    file_parser = FileParser(source_directory)
+    file_parser = FileParser()
+    file_parser.set_source_dir(source_directory)
     file_parser.parse_files()
     diff_files = file_parser.get_diff_files()
 
