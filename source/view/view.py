@@ -1,24 +1,40 @@
 import tkinter as tk
-from tkinter import ttk
+import customtkinter as ctk
 
-from source.view.theme import apply_theme
+from source.view.file_view import FileView
 
-class View(ttk.Frame):
+class View(ctk.CTkFrame):
     def __init__(self, parent):
         super().__init__(parent)
-        apply_theme(self)
+
+        self.file_view = FileView(self)
+        self.controller = None  # Placeholder for the controller instance
+    
+        self.pack(fill=tk.BOTH, expand=True)
         
         self.create_widgets()
-        self.pack(fill=tk.BOTH, expand=True)
-
+        
+    def set_controller(self, controller):
+        self.controller = controller
+        
     def create_widgets(self):
-        # Create a label
-        self.label = ttk.Label(self, text="Welcome to iNav Diff Picker!")
-        self.label.pack(pady=20)
-
-        # Create a button
-        self.button = ttk.Button(self, text="Click Me", command=self.on_button_click)
-        self.button.pack(pady=10)
-
-    def on_button_click(self):
-        self.label.config(text="Button Clicked!")
+        self.view_toggle = ctk.CTkSegmentedButton(self, values=["Files", "Editor"], font=("Arial", 14), command=self.toggle_view)
+        self.view_toggle.pack(padx=10, pady=10, fill="x", anchor="n")
+        self.view_toggle.set("Files")
+        self.show_file_view()
+        
+    def show_file_view(self):
+        self.file_view.pack(fill=tk.BOTH, expand=True)
+    def hide_file_view(self):
+        self.file_view.pack_forget()
+        
+    def toggle_view(self, selected_view: str):
+                
+        if selected_view == "Files":
+            print("Files view selected")
+            self.show_file_view()
+            # Implement logic to switch to Files view
+        elif selected_view == "Editor":
+            print("Editor view selected")
+            self.hide_file_view()
+            # Implement logic to switch to Editor view
