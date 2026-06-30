@@ -1,3 +1,8 @@
+# Temporary fixed file paths for testing purposes
+
+source_directory = "source/model/source_diffs"
+output_directory = "source/model/output_diffs"
+
 class Controller:
     def __init__(self, model, view):
         self.model = model
@@ -6,4 +11,4 @@ class Controller:
         
     def get_file_list(self):
         # Logic to get the list of files from the model
-        return self.model.get_files()
+        return self.model.get_files(source_directory)
