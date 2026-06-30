@@ -92,21 +92,23 @@ def dir_with_case_variations(temp_dir):
 
 def test_file_parser_initialization(temp_dir):
     """Test FileParser initializes correctly"""
-    parser = FileParser(str(temp_dir))
-    assert parser.source_dir == temp_dir
+    parser = FileParser()
+    assert parser.source_dir == Path("")
     assert parser.diff_files == []
 
 
 def test_file_parser_with_path_object(temp_dir):
     """Test FileParser accepts path as string"""
-    parser = FileParser(str(temp_dir))
+    parser = FileParser()
+    parser.set_source_dir(temp_dir)
     assert isinstance(parser.source_dir, Path)
 
 
 def test_file_parser_with_different_paths():
     """Test FileParser initialization with different path types"""
     path1 = "C:\\some\\path"
-    parser1 = FileParser(path1)
+    parser1 = FileParser()
+    parser1.set_source_dir(path1)
     assert parser1.source_dir == Path(path1)
 
 
@@ -115,7 +117,8 @@ def test_file_parser_with_different_paths():
 
 def test_parse_files_finds_diff_files(dir_with_diff_files):
     """Test that parse_files identifies files containing 'diff'"""
-    parser = FileParser(str(dir_with_diff_files))
+    parser = FileParser()
+    parser.set_source_dir(dir_with_diff_files)
     parser.parse_files()
     diff_files = parser.get_diff_files()
 
@@ -124,7 +127,8 @@ def test_parse_files_finds_diff_files(dir_with_diff_files):
 
 def test_parse_files_finds_single_diff(dir_with_single_diff):
     """Test finding a single diff file"""
-    parser = FileParser(str(dir_with_single_diff))
+    parser = FileParser()
+    parser.set_source_dir(dir_with_single_diff)
     parser.parse_files()
     diff_files = parser.get_diff_files()
 
@@ -134,7 +138,8 @@ def test_parse_files_finds_single_diff(dir_with_single_diff):
 
 def test_parse_files_ignores_non_diff_files(dir_with_non_diff_files):
     """Test that parse_files ignores files without 'diff'"""
-    parser = FileParser(str(dir_with_non_diff_files))
+    parser = FileParser()
+    parser.set_source_dir(dir_with_non_diff_files)
     parser.parse_files()
     diff_files = parser.get_diff_files()
 
@@ -143,7 +148,8 @@ def test_parse_files_ignores_non_diff_files(dir_with_non_diff_files):
 
 def test_parse_files_mixed_content(dir_with_mixed_files):
     """Test parsing directory with both diff and non-diff files"""
-    parser = FileParser(str(dir_with_mixed_files))
+    parser = FileParser()
+    parser.set_source_dir(dir_with_mixed_files)
     parser.parse_files()
     diff_files = parser.get_diff_files()
 
@@ -153,7 +159,8 @@ def test_parse_files_mixed_content(dir_with_mixed_files):
 
 def test_parse_files_empty_directory(empty_dir):
     """Test parsing an empty directory"""
-    parser = FileParser(str(empty_dir))
+    parser = FileParser()
+    parser.set_source_dir(empty_dir)
     parser.parse_files()
     diff_files = parser.get_diff_files()
 
@@ -162,7 +169,8 @@ def test_parse_files_empty_directory(empty_dir):
 
 def test_parse_files_case_insensitive(dir_with_case_variations):
     """Test that 'diff all' keyword search is case-sensitive"""
-    parser = FileParser(str(dir_with_case_variations))
+    parser = FileParser()
+    parser.set_source_dir(dir_with_case_variations)
     parser.parse_files()
     diff_files = parser.get_diff_files()
 
@@ -175,7 +183,8 @@ def test_parse_files_case_insensitive(dir_with_case_variations):
 
 def test_get_diff_files_returns_list(dir_with_diff_files):
     """Test that get_diff_files returns a list"""
-    parser = FileParser(str(dir_with_diff_files))
+    parser = FileParser()
+    parser.set_source_dir(dir_with_diff_files)
     parser.parse_files()
     result = parser.get_diff_files()
 
@@ -184,7 +193,8 @@ def test_get_diff_files_returns_list(dir_with_diff_files):
 
 def test_get_diff_files_returns_path_objects(dir_with_diff_files):
     """Test that get_diff_files returns Path objects"""
-    parser = FileParser(str(dir_with_diff_files))
+    parser = FileParser()
+    parser.set_source_dir(dir_with_diff_files)
     parser.parse_files()
     diff_files = parser.get_diff_files()
 
@@ -193,7 +203,8 @@ def test_get_diff_files_returns_path_objects(dir_with_diff_files):
 
 def test_get_diff_files_before_parse(temp_dir):
     """Test get_diff_files before parse_files is called"""
-    parser = FileParser(str(temp_dir))
+    parser = FileParser()
+    parser.set_source_dir(temp_dir)
     diff_files = parser.get_diff_files()
 
     assert isinstance(diff_files, list)
@@ -202,7 +213,8 @@ def test_get_diff_files_before_parse(temp_dir):
 
 def test_get_diff_files_empty_directory(empty_dir):
     """Test get_diff_files on empty directory"""
-    parser = FileParser(str(empty_dir))
+    parser = FileParser()
+    parser.set_source_dir(empty_dir)
     parser.parse_files()
     diff_files = parser.get_diff_files()
 
@@ -214,7 +226,8 @@ def test_get_diff_files_empty_directory(empty_dir):
 
 def test_parse_files_checks_file_content(dir_with_mixed_files):
     """Test that parse_files actually reads file content"""
-    parser = FileParser(str(dir_with_mixed_files))
+    parser = FileParser()
+    parser.set_source_dir(dir_with_mixed_files)
     parser.parse_files()
     diff_files = parser.get_diff_files()
 
@@ -232,7 +245,8 @@ def test_parse_files_checks_file_content(dir_with_mixed_files):
 
 def test_parse_files_nonexistent_directory():
     """Test handling of non-existent directory"""
-    parser = FileParser("/nonexistent/path/to/directory")
+    parser = FileParser()
+    parser.set_source_dir("/nonexistent/path/to/directory")
     # Should handle gracefully - implementation dependent
     try:
         parser.parse_files()
@@ -245,7 +259,8 @@ def test_parse_files_nonexistent_directory():
 
 def test_parse_files_multiple_calls_accumulates(dir_with_diff_files):
     """Test that multiple parse_files calls accumulate results"""
-    parser = FileParser(str(dir_with_diff_files))
+    parser = FileParser()
+    parser.set_source_dir(dir_with_diff_files)
 
     parser.parse_files()
     first_count = len(parser.get_diff_files())
@@ -261,11 +276,13 @@ def test_parse_files_multiple_calls_accumulates(dir_with_diff_files):
 
 def test_file_order_consistency(dir_with_diff_files):
     """Test that file order is consistent across calls"""
-    parser = FileParser(str(dir_with_diff_files))
+    parser = FileParser()
+    parser.set_source_dir(dir_with_diff_files)
     parser.parse_files()
     files1 = [f.name for f in parser.get_diff_files()]
 
-    parser2 = FileParser(str(dir_with_diff_files))
+    parser2 = FileParser()
+    parser2.set_source_dir(dir_with_diff_files)
     parser2.parse_files()
     files2 = [f.name for f in parser2.get_diff_files()]
 
