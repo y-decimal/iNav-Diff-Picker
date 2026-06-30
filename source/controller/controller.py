@@ -12,3 +12,15 @@ class Controller:
     def get_file_list(self):
         # Logic to get the list of files from the model
         return self.model.get_files(source_directory)
+    
+    def set_active_file(self, file_name):
+        # Logic to set the active file in the model
+        self.model.set_active_file(file_name)
+        
+    def get_active_file_content(self):
+        # Logic to get the content of the active file from the model
+        return self.model.get_active_file_content()
+    
+    def get_list_of_categories(self):
+        # Logic to get the list of categories from the model
+        return self.model.get_list_of_categories()

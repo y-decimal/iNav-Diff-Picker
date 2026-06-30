@@ -27,3 +27,5 @@ class FileView(ctk.CTkFrame):
        
     def on_file_selected(self, selected_file):
         print("File selected: ", str(selected_file))
+        self.parent.controller.set_active_file(selected_file)
+        
