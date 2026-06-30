@@ -8,7 +8,6 @@ def apply_theme(root):
     if "clam" in available_themes:
         style.theme_use("clam")
 
-    style.configure()
     style.configure(".", font=("Arial", 11))
     style.configure("TFrame", background="#2c2c2c")
     style.configure("TLabel", background="#2c2c2c", foreground="#dbdbdb")
