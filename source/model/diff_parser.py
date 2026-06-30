@@ -112,7 +112,7 @@ class DiffParser:
 
         return header_keywords
 
-    def filter_diffs(self, header_keywords):
+    def filter_diffs_by_header(self, header_keywords):
         filtered_diffs = []
         for diff in self.diffs:
             for header_keyword in header_keywords:
