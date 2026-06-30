@@ -1,6 +1,6 @@
 import pytest
 from pathlib import Path
-from file_parser import FileParser
+from source.model.file_parser import FileParser
 import tempfile
 
 # ===== FIXTURES =====

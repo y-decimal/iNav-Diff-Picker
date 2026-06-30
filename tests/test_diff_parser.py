@@ -1,7 +1,7 @@
 import pytest
 from pathlib import Path
 import tempfile
-from diff_parser import DiffParser
+from source.model.diff_parser import DiffParser
 
 # ===== FIXTURES =====
 
