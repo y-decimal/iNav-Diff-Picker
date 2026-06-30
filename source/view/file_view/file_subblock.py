@@ -18,4 +18,4 @@ class FileSubBlock(ctk.CTkFrame):
         self.category_header.configure(text=category_name)
     
     def add_content(self, content_widget):
-        content_widget.pack(in_=self.content_frame, padx=5, pady=5, fill="x", expand=True)
+        content_widget.pack(in_=self.content_frame, padx=5, pady=5, fill="both", expand=True)
