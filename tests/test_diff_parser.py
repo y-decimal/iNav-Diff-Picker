@@ -15,7 +15,7 @@ def temp_dir():
 
 @pytest.fixture
 def valid_diff_file(temp_dir):
-    """Create a valid diff file with multiple categories"""
+    """Create a valid diff file with multiple headers"""
     content = """# version
 firmware_version=9.0.1
 
@@ -53,7 +53,7 @@ def empty_file(temp_dir):
 
 @pytest.fixture
 def file_without_headers(temp_dir):
-    """Create a file without any category headers"""
+    """Create a file without any headers"""
     content = """Just some regular content
 No headers here
 No diffs either
@@ -64,19 +64,19 @@ No diffs either
 
 
 @pytest.fixture
-def file_with_empty_categories(temp_dir):
-    """Create a file with empty category blocks"""
+def file_with_empty_headers(temp_dir):
+    """Create a file with empty header blocks"""
     content = """# resources
 
-# category1
+# header1
 
-# category2
+# header2
 
-# category3
+# header3
 value1
 value2
 """
-    file_path = temp_dir / "empty_categories.txt"
+    file_path = temp_dir / "empty_headers.txt"
     file_path.write_text(content)
     return file_path
 
@@ -214,9 +214,9 @@ def test_parse_diffs_no_headers(file_without_headers):
     assert len(diffs) == 0, "File without headers should result in no diffs"
 
 
-def test_parse_diffs_empty_categories(file_with_empty_categories):
-    """Test parsing file with empty category blocks"""
-    parser = DiffParser(str(file_with_empty_categories))
+def test_parse_diffs_empty_headers(file_with_empty_headers):
+    """Test parsing file with empty header blocks"""
+    parser = DiffParser(str(file_with_empty_headers))
     parser.parse_diffs()
     diffs = parser.get_diffs()
 
