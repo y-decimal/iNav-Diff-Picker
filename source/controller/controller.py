@@ -25,10 +25,10 @@ class Controller:
         # Logic to get the list of categories from the model
         return self.model.get_list_of_categories()
     
-    def get_category_content(self, category_name):
-        # Logic to get the content of a specific category from the model
-        return self.model.get_category_content(category_name)
+    def get_headers_by_category(self, category_name):
+        # Logic to get the headers of a specific category from the model
+        return self.model.get_headers_by_category(category_name)
     
-    def get_categories(self):
-        # Logic to get the list of categories from the model
-        return self.model.get_list_of_categories()
+    def get_content_by_header(self, header_name):
+        # Logic to get the content of a specific header from the model
+        return self.model.get_content_by_header(header_name)
