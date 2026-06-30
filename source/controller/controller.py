@@ -24,3 +24,11 @@ class Controller:
     def get_list_of_categories(self):
         # Logic to get the list of categories from the model
         return self.model.get_list_of_categories()
+    
+    def get_category_content(self, category_name):
+        # Logic to get the content of a specific category from the model
+        return self.model.get_category_content(category_name)
+    
+    def get_categories(self):
+        # Logic to get the list of categories from the model
+        return self.model.get_list_of_categories()

@@ -1,3 +1,4 @@
+from source.model import diff_parser
 from source.model.file_parser import FileParser
 from source.model.diff_parser import DiffParser
 
@@ -28,4 +29,14 @@ class Model:
             return None
         diff_parser = DiffParser(self.active_file)
         diff_parser.parse_diffs()
+        # diff_parser.debugLevel = 1
         return diff_parser.get_categories()
+    
+    def get_category_content(self, category_name):
+        if not self.active_file:
+            return None
+        diff_parser = DiffParser(self.active_file)
+        diff_parser.parse_diffs()
+        # diff_parser.debugLevel = 1
+        return diff_parser.filter_diffs_by_category(category_name)
+    
